@@ -40,16 +40,15 @@ export function getTimeframe(timeWindow) {
 export function getPoolLink(token0Address, token1Address = null, remove = false) {
   if (!token1Address) {
     return (
-      `https://app.uniswap.org/#/` +
+      `https://app.exoswap.io/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${'ETH'}`
+      `/${token0Address === '0x42f3f703c0a15a4ad920cfdb4b87265458cb4325' ? 'STOS' : token0Address}/${'STOS'}`
     )
   } else {
     return (
-      `https://app.uniswap.org/#/` +
+      `https://app.exoswap.io/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${
-        token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address
+      `/${token0Address === '0x42f3f703c0a15a4ad920cfdb4b87265458cb4325' ? 'STOS' : token0Address}/${token1Address === '0x42f3f703c0a15a4ad920cfdb4b87265458cb4325' ? 'STOS' : token1Address
       }`
     )
   }
@@ -57,25 +56,24 @@ export function getPoolLink(token0Address, token1Address = null, remove = false)
 
 export function getSwapLink(token0Address, token1Address = null) {
   if (!token1Address) {
-    return `https://app.uniswap.org/#/swap?inputCurrency=${token0Address}`
+    return `https://app.exoswap.io/#/swap/${token0Address}`
   } else {
-    return `https://app.uniswap.org/#/swap?inputCurrency=${
-      token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
-    }&outputCurrency=${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address}`
+    return `https://app.exoswap.io/#/swap/${token0Address === '0x42f3f703c0a15a4ad920cfdb4b87265458cb4325' ? 'STOS' : token0Address
+      }/${token1Address === '0x42f3f703c0a15a4ad920cfdb4b87265458cb4325' ? 'STOS' : token1Address}`
   }
 }
 
 export function getMiningPoolLink(token0Address) {
-  return `https://app.uniswap.org/#/uni/ETH/${token0Address}`
+  return `https://app.exoswap.io/#/STOS/${token0Address}`
 }
 
 export function getUniswapAppLink(linkVariable) {
-  let baseUniswapUrl = 'https://app.uniswap.org/#/uni'
+  let baseUniswapUrl = 'https://app.exoswap.io/#'
   if (!linkVariable) {
     return baseUniswapUrl
   }
 
-  return `${baseUniswapUrl}/ETH/${linkVariable}`
+  return `${baseUniswapUrl}/STOS/${linkVariable}`
 }
 
 export function localNumber(val) {
@@ -303,10 +301,10 @@ export const setThemeColor = (theme) => document.documentElement.style.setProper
 export const Big = (number) => new BigNumber(number)
 
 export const urls = {
-  showTransaction: (tx) => `https://etherscan.io/tx/${tx}/`,
-  showAddress: (address) => `https://www.etherscan.io/address/${address}/`,
-  showToken: (address) => `https://www.etherscan.io/token/${address}/`,
-  showBlock: (block) => `https://etherscan.io/block/${block}/`,
+  showTransaction: (tx) => `https://web3-explorer-mesos.thestratos.org/tx/${tx}/`,
+  showAddress: (address) => `https://www.web3-explorer-mesos.thestratos.org/address/${address}/`,
+  showToken: (address) => `https://www.web3-explorer-mesos.thestratos.org/token/${address}/`,
+  showBlock: (block) => `https://web3-explorer-mesos.thestratos.org/block/${block}/`,
 }
 
 export const formatTime = (unix) => {

@@ -265,10 +265,11 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
       return { ...obj, [cur.id]: cur }
     }, {})
 
-    let bulkResults = await Promise.all(
+    let bulkResults =
       current &&
-        oneDayData &&
-        twoDayData &&
+      oneDayData &&
+      twoDayData &&
+      (await Promise.all(
         current?.data?.tokens.map(async (token) => {
           let data = token
 
@@ -335,25 +336,13 @@ const getTopTokens = async (ethPrice, ethPriceOld) => {
             token0: data,
           })
 
-          // HOTFIX for Aave
-          if (data.id === '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9') {
-            const aaveData = await client.query({
-              query: PAIR_DATA('0xdfc14d2af169b0d36c4eff567ada9b2e0cae044f'),
-              fetchPolicy: 'cache-first',
-            })
-            const result = aaveData.data.pairs[0]
-            data.totalLiquidityUSD = parseFloat(result.reserveUSD) / 2
-            data.liquidityChangeUSD = 0
-            data.priceChangeUSD = 0
-          }
-
           // used for custom adjustments
           data.oneDayData = oneDayHistory
           data.twoDayData = twoDayHistory
 
           return data
         })
-    )
+      ))
 
     return bulkResults
 
@@ -753,9 +742,9 @@ export function useTokenDataCombined(tokenAddresses) {
           if (res) {
             const newVolume = res
               ? res?.reduce(function (acc, entry) {
-                  acc = acc + parseFloat(entry.oneDayVolumeUSD)
-                  return acc
-                }, 0)
+                acc = acc + parseFloat(entry.oneDayVolumeUSD)
+                return acc
+              }, 0)
               : 0
             updateCombinedVolume(newVolume)
           }
@@ -859,7 +848,7 @@ export function useTokenPriceData(tokenAddress, timeWindow, interval = 3600) {
     const currentTime = dayjs.utc()
     const windowSize = timeWindow === timeframeOptions.MONTH ? 'month' : 'week'
     const startTime =
-      timeWindow === timeframeOptions.ALL_TIME ? 1589760000 : currentTime.subtract(1, windowSize).startOf('hour').unix()
+      timeWindow === timeframeOptions.ALL_TIME ? 1691760974 : currentTime.subtract(1, windowSize).startOf('hour').unix()
 
     async function fetch() {
       let data = await getIntervalTokenData(tokenAddress, startTime, interval, latestBlock)

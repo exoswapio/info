@@ -143,7 +143,7 @@ const Gray = styled.span`
 `
 
 const Blue = styled.span`
-  color: #2172e5;
+  color: #00df9a;
   :hover {
     cursor: pointer;
   }
@@ -430,10 +430,10 @@ export const Search = ({ small = false }) => {
               : below410
               ? 'Search...'
               : below470
-              ? 'Search Uniswap...'
+              ? 'Search Exoswap...'
               : below700
               ? 'Search pairs and tokens...'
-              : 'Search Uniswap pairs and tokens...'
+              : 'Search Exoswap pairs and tokens...'
           }
           value={value}
           onChange={(e) => {

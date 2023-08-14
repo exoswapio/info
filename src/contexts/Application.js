@@ -201,10 +201,10 @@ export function useLatestBlocks() {
 export function useCurrentCurrency() {
   const [state, { update }] = useApplicationContext()
   const toggleCurrency = useCallback(() => {
-    if (state.currency === 'ETH') {
+    if (state.currency === 'STOS') {
       update('USD')
     } else {
-      update('ETH')
+      update('STOS')
     }
   }, [state, update])
   return [state[CURRENCY], toggleCurrency]
@@ -263,7 +263,7 @@ export function useSessionStart() {
   return parseInt(seconds / 1000)
 }
 
-export function useListedTokens() {
+export function useListedTokens(full = false) {
   const [state, { updateSupportedTokens }] = useApplicationContext()
   const supportedTokens = state?.[SUPPORTED_TOKENS]
 
@@ -276,7 +276,7 @@ export function useListedTokens() {
           return Promise.resolve([...tokensSoFar, ...newTokens.tokens])
         }
       }, Promise.resolve([]))
-      let formatted = allFetched?.map((t) => t.address.toLowerCase())
+      let formatted = allFetched?.map((t) => t)
       updateSupportedTokens(formatted)
     }
     if (!supportedTokens) {
@@ -288,5 +288,5 @@ export function useListedTokens() {
     }
   }, [updateSupportedTokens, supportedTokens])
 
-  return supportedTokens
+  return full ? supportedTokens : supportedTokens?.map((t) => t.address.toLowerCase())
 }
